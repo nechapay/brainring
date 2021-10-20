@@ -1,0 +1,100 @@
+<!doctype html>
+
+<html>
+
+<head lang="ru-RU">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+
+    <title>Образовательная траектория, ФИНАЛ</title>
+
+    <script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="js/jquery-ui-1.12.1.min.js" type="text/javascript"></script>
+    <script src="js/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+    <script src="js/vue.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="js/FileSaver.min.js" type="text/javascript"></script>
+    <script src="js/jquery.flip.min.js" type="text/javascript"></script>
+    <script src="js/wavesurfer.min.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <link rel="icon" href="img/logo2.png" type="image/x-icon">
+    <link rel="shortcut icon" href="img/logo2.png" type="image/x-icon">
+</head>
+<body>
+<audio id="audioTimer" preload="auto">
+    <source src="audio/time.mp3" type="audio/mpeg">
+</audio>
+
+<div class="content-container">
+    <div id="page_1" class="page active" onclick="goToPage('#page_2');">
+    </div>
+
+    <div id="page_2" class="page">
+        <div class="page-container">
+            <div class="half-container">
+                <div id="team1" class="quarter-panel"></div>
+                <div class="quarter-panel quest  zigzag"></div>
+            </div>
+            <div class="half-container">
+                <div class="quarter-panel quest"></div>
+                <div id="team2" class="quarter-panel"></div>
+            </div>
+        </div>
+        <div id="score" class="score-container">
+            <div class="score-half">
+                <div class="score-quarter">
+                    <div class="score-title"><span v-html="teamOne"></span></div>
+                    <div class="score-value"><span v-html="teamOneScore"></span></div>
+                </div>
+                <div class="score-quarter">
+                    <div class="score-title hide"><span v-html="teamTwo"></span></div>
+                    <div class="score-value hide"><span v-html="teamTwoScore"></span></div>
+                </div>
+            </div>
+            <div class="score-half">
+                <div class="quarter-panel questions"></div>
+                <div class="score-quarter">
+                    <div class="score-title"><span v-html="teamTwo"></span></div>
+                    <div class="score-value"><span v-html="teamTwoScore"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="task-viewer" class="modal" v-if="isVisible">
+    <div class="viewer-header">
+        <span class="viewer-title" v-html="timer"></span>
+        <button class="my-button" @click="timerStartHandle" v-if="isStartVisible">Старт!</button>
+        <button class="my-button" @click="timerStopHandle" v-if="isStopVisible">Стоп!</button>
+    </div>
+    <div class="modal-content" v-bind:class="backgroundClass">
+        <div class="viewer-text"><span v-html="text"></span></div>
+        <div class="viewer-controls">
+            <div v-if="isTeamButtonsVisible">
+                <button class="my-button" @click="teamClickHandle('one')">{{ teamOne }}</button>
+                <button class="my-button" @click="teamClickHandle('two')">{{ teamTwo }}</button>
+                <button class="my-button hide" @click="teamClickHandle('three')">{{ teamThree }}</button>
+            </div>
+            <div v-if="isAnswerButtonVisible">
+                <button class="my-button" @click="answerClickHandle">Показать ответ</button>
+            </div>
+            <div v-if="isAnswerControlsVisible">
+                <button class="my-button correct" @click="correctAnswerClickHandle">Верно</button>
+                <button class="my-button incorrect" @click="incorrectAnswerClickHandle">Не верно</button>
+            </div>
+            <div v-if="isBlitzButtonVisible">
+                <button class="my-button" @click="blitzClickHandle">Следующий вопрос</button>
+            </div>
+            <div v-if="isCloseButtonVisible">
+                <button class="my-button" @click="closeClickHandle">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/main.js" type="text/javascript"></script>
+</html>
